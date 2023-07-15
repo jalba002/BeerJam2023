@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        animatorCon = GetComponent<Animator>();
+        animatorCon = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -63,6 +63,9 @@ public class PlayerController : MonoBehaviour
     {
         // Distance between this and ground then this is the amount that gets moved downwards.
         Vector3 movement = new Vector3(correctedDirection.x * walkingSpeed, 0f, walkingSpeed * correctedDirection.y);
+        animatorCon.SetFloat("XSpeed", correctedDirection.x);
+        animatorCon.SetFloat("YSpeed", correctedDirection.y);
+         
         movement = movementReference.TransformDirection(movement);
         CollisionFlags collisionFlags = characterController.Move(movement * Time.deltaTime);
     }
