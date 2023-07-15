@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-
 public class Container : MonoBehaviour
 {
     public AreaGroup side;
-    private Animator animator;
+
+    public Animator animatorA;
+    public Animator animatorB;
 
     [SerializeField] private SMBox objectiveA;
     [SerializeField] private SMBox objectiveB;
@@ -20,20 +20,19 @@ public class Container : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
     }
 
     public void OpenA()
     {
         if (doorAStatus) return;
-        animator.SetTrigger("OpenA");
+        animatorA.SetTrigger("Open");
         objectiveA.enabled = true;
         doorAStatus = true;
     }
     public void OpenB()
     {
         if (doorBStatus) return;
-        animator.SetTrigger("OpenB");
+        animatorB.SetTrigger("Open");
         objectiveB.enabled = true;
         doorBStatus = true;
     }
@@ -41,14 +40,14 @@ public class Container : MonoBehaviour
     public void CloseA()
     {
         if (!doorAStatus) return;
-        animator.SetTrigger("CloseA");
+        animatorA.SetTrigger("Close");
         objectiveA.enabled = false;
         doorAStatus = false;
     }
     public void CloseB()
     {
         if (!doorBStatus) return;
-        animator.SetTrigger("CloseB");
+        animatorB.SetTrigger("Close");
         objectiveB.enabled = false;
         doorBStatus = false;
     }
