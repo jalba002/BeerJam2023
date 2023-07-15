@@ -29,6 +29,14 @@ public class PlayerController : MonoBehaviour
         // Better than on awake?
         characterController = GetComponent<CharacterController>();
         mainCamera = FindObjectOfType<Camera>();
+        if (lookTarget == null)
+        {
+            lookTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+            lookTarget.gameObject.name = "[GENERATED] - Player Cursor";
+            var col = lookTarget.GetComponent<Collider>();
+            if (col != null) Destroy(col);
+            //lookTarget.GetComponent<MeshRenderer>().enabled = false; 
+        }
         if (movementReference != null) 
         { 
             Destroy(movementReference.gameObject); 
@@ -48,7 +56,7 @@ public class PlayerController : MonoBehaviour
         // Gather direction of movement.
         // Movement dpending on camera pos.
         direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        correctedDirection = direction;
+        correctedDirection = direction.normalized;
         // 
         var mouseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(mouseRay, out RaycastHit hit, mainCamera.farClipPlane, lMask))
@@ -57,15 +65,15 @@ public class PlayerController : MonoBehaviour
             var ra = Quaternion.LookRotation(lookTarget.position - transform.position, Vector3.up);
             transform.eulerAngles = new Vector3(0f, ra.eulerAngles.y, 0f);
         }
+
+        animatorCon.SetFloat("XSpeed", correctedDirection.x);
+        animatorCon.SetFloat("YSpeed", Vector3.Dot(correctedDirection, transform.forward));
     }
 
     private void LateUpdate()
     {
         // Distance between this and ground then this is the amount that gets moved downwards.
-        Vector3 movement = new Vector3(correctedDirection.x * walkingSpeed, 0f, walkingSpeed * correctedDirection.y);
-        animatorCon.SetFloat("XSpeed", correctedDirection.x);
-        animatorCon.SetFloat("YSpeed", correctedDirection.y);
-         
+        Vector3 movement = new Vector3(correctedDirection.x * walkingSpeed, 0f, walkingSpeed * correctedDirection.y);         
         movement = movementReference.TransformDirection(movement);
         CollisionFlags collisionFlags = characterController.Move(movement * Time.deltaTime);
     }
