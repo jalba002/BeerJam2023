@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Unity.Collections;
 
 public class Container : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class Container : MonoBehaviour
 
     [SerializeField] private SMBox objectiveA;
     [SerializeField] private SMBox objectiveB;
+    [SerializeField] private MeshRenderer roof;
 
     public bool debugA = false;
     public bool debugB = false;
@@ -18,8 +21,11 @@ public class Container : MonoBehaviour
     private bool doorAStatus = false; // FAlse = close.
     private bool doorBStatus = false;
 
+    [ReadOnly] [SerializeField] private int itemID = 0;
+
     private void Awake()
     {
+
     }
 
     public void OpenA()
@@ -28,6 +34,7 @@ public class Container : MonoBehaviour
         animatorA.SetTrigger("Open");
         objectiveA.enabled = true;
         doorAStatus = true;
+        if (roof.enabled) roof.enabled = false;
     }
     public void OpenB()
     {
@@ -35,6 +42,7 @@ public class Container : MonoBehaviour
         animatorB.SetTrigger("Open");
         objectiveB.enabled = true;
         doorBStatus = true;
+        if (roof.enabled) roof.enabled = false;
     }
 
     public void CloseA()
@@ -43,6 +51,7 @@ public class Container : MonoBehaviour
         animatorA.SetTrigger("Close");
         objectiveA.enabled = false;
         doorAStatus = false;
+        if (doorBStatus) roof.enabled = true;
     }
     public void CloseB()
     {
@@ -50,6 +59,7 @@ public class Container : MonoBehaviour
         animatorB.SetTrigger("Close");
         objectiveB.enabled = false;
         doorBStatus = false;
+        if (doorAStatus) roof.enabled = true;   
     }
 
     private void OnValidate()
@@ -66,5 +76,13 @@ public class Container : MonoBehaviour
             else OpenB();
             debugB = false;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+#if UNITY_EDITOR
+        UnityEditor.Handles.color = Color.white;
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 3f, itemID.ToString());
+#endif
     }
 }
