@@ -8,79 +8,49 @@ public class Container : MonoBehaviour
 {
     public AreaGroup side;
 
-    public Animator animatorA;
-    public Animator animatorB;
+    public Animator animator;
 
-    [SerializeField] private SMBox objectiveA;
-    [SerializeField] private SMBox objectiveB;
+    [SerializeField] private SMBox objective;
     [SerializeField] private MeshRenderer roof;
 
-    public bool debugA = false;
-    public bool debugB = false;
+    public bool debug = false;
 
-    private bool doorAStatus = false; // FAlse = close.
-    private bool doorBStatus = false;
+    private bool doorStatus = false; // FAlse = close.
 
     [ReadOnly] [SerializeField] private int itemID = 0;
+    public int ID => itemID;
 
-    private void Awake()
+    public void Open()
     {
-
+        if (doorStatus) return;
+        animator.SetTrigger("Open");
+        objective.Enable();
+        doorStatus = true;
+        roof.enabled = false;
     }
 
-    public void OpenA()
+    public void Close()
     {
-        if (doorAStatus) return;
-        animatorA.SetTrigger("Open");
-        objectiveA.enabled = true;
-        doorAStatus = true;
-        if (roof.enabled) roof.enabled = false;
-    }
-    public void OpenB()
-    {
-        if (doorBStatus) return;
-        animatorB.SetTrigger("Open");
-        objectiveB.enabled = true;
-        doorBStatus = true;
-        if (roof.enabled) roof.enabled = false;
+        if (!doorStatus) return;
+        animator.SetTrigger("Close");
+        objective.Disable();
+        doorStatus = false;
+        roof.enabled = true;
     }
 
-    public void CloseA()
-    {
-        if (!doorAStatus) return;
-        animatorA.SetTrigger("Close");
-        objectiveA.enabled = false;
-        doorAStatus = false;
-        if (doorBStatus) roof.enabled = true;
-    }
-    public void CloseB()
-    {
-        if (!doorBStatus) return;
-        animatorB.SetTrigger("Close");
-        objectiveB.enabled = false;
-        doorBStatus = false;
-        if (doorAStatus) roof.enabled = true;   
-    }
-
+#if UNITY_EDITOR
     private void OnValidate()
     {
-        if (debugA)
+        if (debug)
         {
-            if (doorAStatus) CloseA();
-            else OpenA();
-            debugA = false;
-        }
-        else if (debugB)
-        {
-            if (doorBStatus) CloseB();
-            else OpenB();
-            debugB = false;
+            if (doorStatus) Close();
+            else Open();
+            debug = false;
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-#if UNITY_EDITOR
         UnityEditor.Handles.color = Color.white;
         UnityEditor.Handles.Label(transform.position + Vector3.up * 3f, itemID.ToString());
 #endif

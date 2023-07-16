@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public enum EnemyState
 {
+    Idle,
     Startup,
     Spawning,
     Attacking,
@@ -33,6 +34,8 @@ namespace BEER2023.Enemy
         private NavMeshAgent nvAgent;
         private NavMeshPath currentPath;
         private HealthManager hpMan;
+
+        private SMBox objective;
 
         private void OnEnable()
         {
@@ -64,6 +67,9 @@ namespace BEER2023.Enemy
         {
             switch (currentState)
             {
+                case EnemyState.Idle:
+                    // Start seartching for one? Or just stay still.
+                    break;
                 case EnemyState.Startup:
                     // Do nothin on startup then
                     //nvAgent.isStopped = true;
@@ -77,13 +83,17 @@ namespace BEER2023.Enemy
                     // Go towards the objecvtive through a pre-calculated path.
                     // When the objective is reached, then play the grab animation with correct orientation
                     // Afterwards, if carrying the object, go to recovering. (Maybe same entrance)
-                    if (!nvAgent.pathPending)
+                    if (!objective.IsEnabled) ChangeState(EnemyState.Idle);
+                    else if (!nvAgent.pathPending)
                     {
                         if (nvAgent.remainingDistance <= nvAgent.stoppingDistance)
                         {
-                            timeStolen += Time.deltaTime;
-                            Debug.Log("Stealing! for: " + timeStolen);
-                            if (timeStolen > timeToSteal) ChangeState(EnemyState.Recovering);
+                            if (objective.IsEnabled)
+                            {
+                                timeStolen += Time.deltaTime;
+                                Debug.Log("Stealing! for: " + timeStolen);
+                                if (timeStolen > timeToSteal) ChangeState(EnemyState.Recovering);
+                            }
                         }
                     }
                     break;
@@ -121,6 +131,9 @@ namespace BEER2023.Enemy
             {
                 switch (currentState)
                 {
+                    case EnemyState.Idle:
+                        nvAgent.isStopped = false;
+                        break;
                     case EnemyState.Startup:
                         break;
                     case EnemyState.Attacking:
@@ -139,6 +152,9 @@ namespace BEER2023.Enemy
             // OnEnter
             switch (currentState)
             {
+                case EnemyState.Idle:
+                    nvAgent.isStopped = true;
+                    break;
                 case EnemyState.Startup:
                     timeStolen = 0f;
                     nvAgent.isStopped = true;
@@ -156,7 +172,7 @@ namespace BEER2023.Enemy
                     nvAgent.isStopped = true;
                     // TODO check if this works fine.
                     GetComponentInChildren<MeshRenderer>().enabled = false;
-                     // Points get deduced. But not here.
+                    // Points get deduced. But not here.
                     break;
                 case EnemyState.Spawning:
                     // Play an animator and respawn?
@@ -171,6 +187,12 @@ namespace BEER2023.Enemy
         // Path is given by spawner?
         public void SetAttackTarget(Transform attackableTarget)
         {
+            if (attackableTarget == null)
+            {
+                ChangeState(EnemyState.Idle);
+                return;
+            }
+            objective = attackableTarget.GetComponent<SMBox>();
             // Create a path towars target?
             NavMeshPath newPath = new NavMeshPath();
             if ((NavMesh.CalculatePath(transform.position, attackableTarget.position, NavMesh.AllAreas, newPath)))
@@ -178,6 +200,16 @@ namespace BEER2023.Enemy
                 currentPath = newPath;
                 // Apply to agent too.
                 nvAgent.SetPath(currentPath);
+            }
+            if (currentState == EnemyState.Idle) ChangeState(EnemyState.Attacking);
+        }
+
+        public void Alert(SMBox alerter)
+        {
+            if (objective == null || Vector3.Distance(alerter.transform.position, transform.position) 
+                < Vector3.Distance(objective.transform.position, transform.position))
+            {
+                SetAttackTarget(alerter.transform);
             }
         }
     }
