@@ -52,7 +52,7 @@ public class GameDirector : MonoBehaviour
         var boxesFound = FindObjectsOfType<SMBox>();
         foreach (var item in boxesFound)
         {
-            if (item.enabled) objectiveBoxes.Add(item);
+            if (item.addToListAuto) objectiveBoxes.Add(item);
         }
 
         var ctrs = FindObjectsOfType<Container>();
@@ -64,7 +64,7 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        StartSpawning();   
+        StartSpawning();
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class GameDirector : MonoBehaviour
         currentLives--;
         Debug.Log("LOST A LIFE!");
 
-        if(currentLives <= 0)
+        if (currentLives <= 0)
         {
             // Absolute loss.
             Debug.Log("AND YOU LOST");
@@ -144,7 +144,7 @@ public class GameDirector : MonoBehaviour
         WaveDataEntry nextInstruction;
         while (currentWave.waveInstructions.Count > currentWaveInstructionIdx)
         {
-            while(!isSpawning) { yield return new WaitForEndOfFrame(); }
+            while (!isSpawning) { yield return new WaitForEndOfFrame(); }
             nextInstruction = currentWave.waveInstructions[currentWaveInstructionIdx];
             bool waitInstruction = InterpretWaveDataEntry(nextInstruction);
             currentWaveInstructionIdx++;
@@ -170,36 +170,48 @@ public class GameDirector : MonoBehaviour
                 {
                     Transform spawnPoint = GetRandomSpawnPoint<Transform>(entry.side); // Gather random spawnpoint.
                     EnemyController enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-                    enemy.SetAttackTarget(GetRandomFromList<SMBox>(objectiveBoxes).transform);
-                    enemy.SwapState(EnemyState.Attacking);
-                    enemies.Add(enemy);
+                    var a = GetRandomFromList<SMBox>(objectiveBoxes);
+                    if (a != null)
+                    {
+                        enemy.SetAttackTarget(a.transform);
+                        enemy.SwapState(EnemyState.Attacking);
+                        enemies.Add(enemy);
+                    }
                 }
                 break;
-            case Verbs.Container:
+            case Verbs.ContainerRandom:
                 // From the list of containers, gather one and open it.
+                Debug.Log("Opening a random container!");
                 for (int i = 0; i < amount; i++)
                 {
                     Container chosenOne = GetRandomContainer(entry.side); // Gather random spawnpoint.
-                    //Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+                    chosenOne.Open();
                 }
+                break;
+            case Verbs.Container:
+                var container = containers.Find(x => x.ID == amount);
+                if (container == null) return false;
+                if (entry.doorStatus == DoorStatus.Open) container.Open();
+                else if (entry.doorStatus == DoorStatus.Close) container.Close();
                 break;
             case Verbs.Wait:
                 // Wait command!
                 Debug.Log("Wait command issued");
                 return true;
-            case Verbs.ContainerRandom:
-                Debug.Log("Opening a random container!");
-                break;
             case Verbs.ContainerCloseAll:
                 Debug.Log("Closing all containers");
-                foreach (Container container in containers)
+                foreach (Container asd in containers)
                 {
-                    container.CloseA();
-                    container.CloseB();
+                    asd.Close();
                 }
                 break;
         }
         return false;
+    }
+
+    public Transform GetObjective()
+    {
+        return GetRandomFromList<SMBox>(objectiveBoxes).transform;
     }
 
     private T GetRandomSpawnPoint<T>(AreaGroup side)
@@ -211,6 +223,7 @@ public class GameDirector : MonoBehaviour
 
     private T GetRandomFromList<T>(List<T> list) where T : MonoBehaviour
     {
+        if (list.Count == 0) return null;
         return list[Random.Range(0, list.Count)];
     }
 

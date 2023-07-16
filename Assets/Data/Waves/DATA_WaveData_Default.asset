@@ -13,69 +13,43 @@ MonoBehaviour:
   m_Name: DATA_WaveData_Default
   m_EditorClassIdentifier: 
   waveInstructions:
-  - verb: 5
-    amount: 3
-    side: 1
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
-  - verb: 1
-    amount: 1
-    side: 1
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
-  - verb: 1
-    amount: 1
-    side: 2
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
-  - verb: 1
-    amount: 1
-    side: 3
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
-  - verb: 1
-    amount: 1
-    side: 4
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
-  - verb: 5
-    amount: 5
-    side: 4
-    AB: 0
-    doorStatus: 0
-    doorAmount: 0
   - verb: 2
-    amount: 1
+    amount: 0
     side: 1
-    AB: 0
     doorStatus: 0
-    doorAmount: 0
   - verb: 5
     amount: 5
     side: 1
-    AB: 0
     doorStatus: 0
-    doorAmount: 0
+  - verb: 1
+    amount: 1
+    side: 1
+    doorStatus: 0
+  - verb: 1
+    amount: 1
+    side: 2
+    doorStatus: 0
+  - verb: 5
+    amount: 5
+    side: 4
+    doorStatus: 0
+  - verb: 2
+    amount: 0
+    side: 1
+    doorStatus: 1
+  - verb: 5
+    amount: 5
+    side: 1
+    doorStatus: 0
   - verb: 1
     amount: 3
     side: 1
-    AB: 0
     doorStatus: 0
-    doorAmount: 0
   - verb: 5
     amount: 5
     side: 1
-    AB: 0
     doorStatus: 0
-    doorAmount: 0
   - verb: 1
     amount: 3
     side: 2
-    AB: 0
     doorStatus: 0
-    doorAmount: 0
