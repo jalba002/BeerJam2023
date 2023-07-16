@@ -17,39 +17,49 @@ MonoBehaviour:
     amount: 0
     side: 1
     doorStatus: 0
+    information: 
   - verb: 5
     amount: 5
     side: 1
     doorStatus: 0
+    information: 
   - verb: 1
     amount: 1
     side: 1
     doorStatus: 0
+    information: 
   - verb: 1
     amount: 1
     side: 2
     doorStatus: 0
+    information: 
   - verb: 5
     amount: 5
     side: 4
     doorStatus: 0
-  - verb: 2
+    information: 
+  - verb: 3
     amount: 0
     side: 1
     doorStatus: 1
+    information: 
   - verb: 5
     amount: 5
     side: 1
     doorStatus: 0
+    information: 
   - verb: 1
     amount: 3
     side: 1
     doorStatus: 0
+    information: 
   - verb: 5
     amount: 5
     side: 1
     doorStatus: 0
+    information: 
   - verb: 1
     amount: 3
     side: 2
     doorStatus: 0
+    information: 

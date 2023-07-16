@@ -22,15 +22,13 @@ public class WaveListDrawer : PropertyDrawer
         switch (verb)
         {
             case Verbs.ContainerRandom:
-                contentPosition.width *= 0.25f;
+                contentPosition.width *= 0.33f;
                 EditorGUI.indentLevel = 0;
                 EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("verb"), GUIContent.none);
                 contentPosition.x += contentPosition.width;
                 EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("amount"), GUIContent.none);
                 contentPosition.x += contentPosition.width;
                 EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("side"), GUIContent.none);
-                contentPosition.x += contentPosition.width;
-                EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("doorAmount"), GUIContent.none);
                 break;
             case Verbs.Container:
                 contentPosition.width *= 0.325f;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1249112529195411064}
   - component: {fileID: 1249112529195411067}
   - component: {fileID: 1249112529195411066}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08ee385293d5cc439d1038ae55f8614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 3
   angularSpeed: 240
   stopDistance: 1
   timeToSteal: 5
@@ -153,5 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9936f51651d1c7846b66a3b7ab7b8dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 20
+  startingHealth: 6
   isAlive: 1
