@@ -192,12 +192,12 @@ public class GameDirector : MonoBehaviour
                 for (int i = 0; i < amount; i++)
                 {
                     Transform spawnPoint = GetRandomSpawnPoint<Transform>(entry.side); // Gather random spawnpoint.
-                    EnemyController enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+                    EnemyController enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
                     var a = GetRandomFromList<SMBox>(objectiveBoxes);
                     if (a != null)
                     {
                         enemy.SetAttackTarget(a.transform);
-                        enemy.SwapState(EnemyState.Attacking);
+                        enemy.SwapState(EnemyState.Startup);
                         enemies.Add(enemy);
                     }
                 }

@@ -26,7 +26,7 @@ namespace BEER2023.Enemy
         public float timeToSteal = 5f;
         private float timeStolen = 0f;
 
-        public EnemyState initialState = EnemyState.Startup;
+        public EnemyState initialState = EnemyState.Spawning;
 
         [ReadOnly] public EnemyState currentState;
 
@@ -37,6 +37,10 @@ namespace BEER2023.Enemy
 
         private SMBox objective;
 
+        private Animator animator;
+
+        private float waitTime = 0f;
+
         private void OnEnable()
         {
             // Probably not used if pooling is going to be used with enemies.
@@ -46,6 +50,7 @@ namespace BEER2023.Enemy
         private void Awake()
         {
             // Gather components here.
+            animator = GetComponentInChildren<Animator>();
             nvAgent = GetComponent<NavMeshAgent>();
             hpMan = GetComponent<HealthManager>();
             hpMan.OnEliminated += () => ChangeState(EnemyState.Disabled);
@@ -76,9 +81,16 @@ namespace BEER2023.Enemy
                     //nvAgent.isStopped = true;
                     // Init everything then go to Idle
                     // ChangeState(EnemyState.Idle);
+                    if (Time.timeSinceLevelLoad > waitTime)
+                    {
+                        ChangeState(EnemyState.Spawning);
+                        //ChangeState(EnemyState.Attacking);
+                    }
+                    
                     break;
                 case EnemyState.Spawning:
                     // Waiting for animation to end.
+                    ChangeState(EnemyState.Attacking);
                     break;
                 case EnemyState.Attacking:
                     // Go towards the objecvtive through a pre-calculated path.
@@ -89,7 +101,7 @@ namespace BEER2023.Enemy
                     {
                         if (nvAgent.remainingDistance <= nvAgent.stoppingDistance)
                         {
-                            if (objective.IsEnabled)
+                            if (objective.IsEnabled && hpMan.isAlive)
                             {
                                 timeStolen += Time.deltaTime;
                                 Debug.Log("Stealing! for: " + timeStolen);
@@ -109,6 +121,7 @@ namespace BEER2023.Enemy
                             {
                                 //...
                                 // GOLASOOOOOO
+                                if (!hpMan.isAlive) return;
                                 GameDirector.Instance.BoxScored();
                                 ChangeState(EnemyState.Disabled);
                             }
@@ -158,9 +171,14 @@ namespace BEER2023.Enemy
                     break;
                 case EnemyState.Startup:
                     timeStolen = 0f;
+                    hpMan.Spawn();
                     nvAgent.isStopped = true;
+                    // Visible
+                    animator.SetTrigger("Jump");
+                    waitTime = Time.timeSinceLevelLoad + 1f;
                     break;
                 case EnemyState.Attacking:
+                    nvAgent.isStopped = false;
                     // Autoselect a new target?
                     break;
                 case EnemyState.Recovering:
@@ -180,8 +198,8 @@ namespace BEER2023.Enemy
                     // Play an animator and respawn?
                     // Atleast enable the GO.
                     // TODO check if fine.
-                    GetComponentInChildren<MeshRenderer>().enabled = enabled;
-                    hpMan.Spawn();
+                    //GetComponentInChildren<MeshRenderer>().enabled = enabled;
+                   
                     break;
             }
         }
@@ -203,7 +221,7 @@ namespace BEER2023.Enemy
                 // Apply to agent too.
                 nvAgent.SetPath(currentPath);
             }
-            if (currentState == EnemyState.Idle) ChangeState(EnemyState.Attacking);
+            //if (currentState == EnemyState.Idle) ChangeState(EnemyState.Attacking);
         }
 
         public void Alert(SMBox alerter)
