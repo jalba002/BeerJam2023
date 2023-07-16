@@ -1,35 +1,29 @@
-﻿using UnityEngine;
+﻿using BEER2023.Enemy;
+using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class SMBox : MonoBehaviour
 {
-    // When Enabled, it automatically adds to the list.
-    public AreaGroup side;
-    private MeshRenderer meshRenderer;
+    public bool addToListAuto = true;
+    public bool IsEnabled => isEnabled;
+    private bool isEnabled = true;
 
-    private void Awake()
+    public void Enable()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-    }
-    private void OnEnable()
-    {
-        // Add itself to the available objectives.
-        // Call director and add.
-        // Make an instance of the director. But can be destroyed.
         GameDirector.Instance.AddBox(this);
-        //this.gameObject.SetActive(true);
-        meshRenderer.enabled = true;
+        isEnabled = true;
+        // Cast a sphere alerting everyone nearby
+        var cols =  Physics.OverlapSphere(transform.position, 25f);
+        foreach (var item in cols)
+        {
+            item.gameObject.transform.gameObject.GetComponent<EnemyController>()?.Alert(this);
+        }
     }
-
-    private void OnDisable()
+    public void Disable()
     {
         GameDirector.Instance.RemoveBox(this);
-        meshRenderer.enabled = false;
+        // 
+        isEnabled = false;
     }
 
-    private void OnDestroy()
-    {
-        // Not needed as we could use the pooling system.
-        GameDirector.Instance.RemoveBox(this);
-    }
+
 }
