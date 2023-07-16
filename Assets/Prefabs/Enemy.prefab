@@ -137,7 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   angularSpeed: 240
-  stopDistance: 0.5
+  stopDistance: 1
+  timeToSteal: 5
   initialState: 0
 --- !u!114 &1249112529195411066
 MonoBehaviour:
@@ -151,5 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9936f51651d1c7846b66a3b7ab7b8dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 5
+  startingHealth: 3
   isAlive: 1

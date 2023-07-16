@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34220137775771543b4ba43b0dde3ad6, type: 3}
+  m_Name: DATA_WaveData_Default
+  m_EditorClassIdentifier: 
+  waveInstructions:
+  - verb: 5
+    amount: 3
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 1
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 1
+    side: 2
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 1
+    side: 3
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 1
+    side: 4
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 5
+    amount: 5
+    side: 4
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 2
+    amount: 1
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 5
+    amount: 5
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 3
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 5
+    amount: 5
+    side: 1
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0
+  - verb: 1
+    amount: 3
+    side: 2
+    AB: 0
+    doorStatus: 0
+    doorAmount: 0

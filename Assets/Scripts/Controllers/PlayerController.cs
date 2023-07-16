@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     // Insta-rotate to places. High speeds.
 
     public float walkingSpeed = 10f;
+    public float rotationSpeed = 120f;
+
+    public float activationRange = 1f;
     private Vector2 direction;
 
     private CharacterController characterController;
@@ -23,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private Transform movementReference;
 
     private Animator animatorCon;
+
+    private bool mouseClicked = false;
 
     private void OnEnable()
     {
@@ -53,17 +58,30 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        mouseClicked = Input.GetMouseButtonDown(0);
         // Gather direction of movement.
         // Movement dpending on camera pos.
         direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         correctedDirection = direction.normalized;
-        // 
+
         var mouseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(mouseRay, out RaycastHit hit, mainCamera.farClipPlane, lMask))
         {
             lookTarget.position = hit.point;
             var ra = Quaternion.LookRotation(lookTarget.position - transform.position, Vector3.up);
-            transform.eulerAngles = new Vector3(0f, ra.eulerAngles.y, 0f);
+            float rotationTotal = Mathf.Lerp(transform.eulerAngles.y, ra.eulerAngles.y, rotationSpeed * Time.deltaTime);
+            transform.eulerAngles = new Vector3(0f, rotationTotal, 0f);
+
+            if (mouseClicked)
+            {
+                float distance = Vector3.Distance(transform.position, hit.collider.bounds.center);
+                //Debug.Log("Hit distance! :" + distance);
+                //Debug.DrawLine(transform.position, hit.collider.bounds.center, Color.red, 10f);
+                if (distance < activationRange)
+                {
+                    hit.collider.gameObject?.GetComponent<IActivatable>()?.Activate(this.gameObject.transform);
+                }
+            }
         }
 
         animatorCon.SetFloat("XSpeed", correctedDirection.x);
@@ -73,7 +91,7 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         // Distance between this and ground then this is the amount that gets moved downwards.
-        Vector3 movement = new Vector3(correctedDirection.x * walkingSpeed, 0f, walkingSpeed * correctedDirection.y);         
+        Vector3 movement = new Vector3(correctedDirection.x * walkingSpeed, Physics.gravity.y, walkingSpeed * correctedDirection.y);         
         movement = movementReference.TransformDirection(movement);
         CollisionFlags collisionFlags = characterController.Move(movement * Time.deltaTime);
     }
