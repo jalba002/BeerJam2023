@@ -41,7 +41,8 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Play!");
         // Loadscene
         // Play cutscene in the future and when finished, load scene.
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Tutorial");
+        //SceneManager.LoadScene("Main");
     }
 
     public void Options()
@@ -95,7 +96,7 @@ public class MenuManager : MonoBehaviour
 
     public void ExitToMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void BackToGame()

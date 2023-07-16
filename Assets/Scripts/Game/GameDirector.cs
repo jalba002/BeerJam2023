@@ -134,7 +134,8 @@ public class GameDirector : MonoBehaviour
     private void TriggerWin()
     {
         // What win?
-        // Save score somewhere in ONLINE? DAMN.
+        // Save score somewhere in ONLINE?
+        Debug.Log("YOU HAVE WON!");
     }
 
     private void TriggerLoss()
@@ -147,7 +148,7 @@ public class GameDirector : MonoBehaviour
 
     void ReturnToMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
     #endregion
 
@@ -191,6 +192,7 @@ public class GameDirector : MonoBehaviour
             if (waitInstruction) { yield return new WaitForSecondsRealtime(nextInstruction.amount); }
         }
         Debug.Log("Stopped THE SUMMONING!");
+        TriggerWin();
     }
 
     private bool InterpretWaveDataEntry(WaveDataEntry entry)
