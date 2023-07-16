@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
         Debug.Log("Play!");
         // Loadscene
         // Play cutscene in the future and when finished, load scene.
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene(2);
     }
 
     public void Options()
