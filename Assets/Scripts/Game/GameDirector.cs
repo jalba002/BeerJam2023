@@ -37,6 +37,9 @@ public class GameDirector : MonoBehaviour
 
     private List<EnemyController> enemies = new List<EnemyController>();
 
+    public MenuManager prefabMenu;
+    private MenuManager menuMan;
+
     // Have a list of pickable targets. If there's a new dropped one, we could analyze if its closer than others.
     // 
     //
@@ -44,6 +47,8 @@ public class GameDirector : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        menuMan = Instantiate(prefabMenu);
+        menuMan.ToggleHide(false);
         // Populate all spawnpoints.
         var spawnPointList = FindObjectsOfType<SpawnPoint>();
         foreach (var item in spawnPointList)
@@ -69,6 +74,18 @@ public class GameDirector : MonoBehaviour
         currentLives = maxLives;
         UpdateBoxesAmount(currentLives);
         StartSpawning();
+    }
+
+    private void Update()
+    {
+        // Open menu with ESC
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Toggle pause menu.
+            if (menuMan.isCanvasOn)
+                menuMan.BackToGame();
+            else menuMan.OpenAsPause();
+        }
     }
 
     /// <summary>
@@ -155,7 +172,7 @@ public class GameDirector : MonoBehaviour
             currentWaveInstructionIdx++;
             if (waitInstruction) { yield return new WaitForSecondsRealtime(nextInstruction.amount); }
         }
-        Debug.Log("Stopped THE SUMONING!");
+        Debug.Log("Stopped THE SUMMONING!");
     }
 
     private bool InterpretWaveDataEntry(WaveDataEntry entry)
