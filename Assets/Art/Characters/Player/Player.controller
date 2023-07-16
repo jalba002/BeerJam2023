@@ -11,35 +11,53 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 5522812681064789136, guid: bd0de708191071a42adb9eec37e29f9a,
       type: 3}
-    m_Threshold: 0
-    m_Position: {x: 0, y: -1}
-    m_TimeScale: -1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -3100369314251171874, guid: bd0de708191071a42adb9eec37e29f9a,
-      type: 3}
-    m_Threshold: 0.5
-    m_Position: {x: 0, y: 0}
+    m_Threshold: -1
+    m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
+    m_DirectBlendParameter: XSpeed
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 5522812681064789136, guid: bd0de708191071a42adb9eec37e29f9a,
       type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: YSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -3100369314251171874, guid: bd0de708191071a42adb9eec37e29f9a,
+      type: 3}
     m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: YSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 5522812681064789136, guid: bd0de708191071a42adb9eec37e29f9a,
+      type: 3}
+    m_Threshold: 2
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
+    m_DirectBlendParameter: YSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 5522812681064789136, guid: bd0de708191071a42adb9eec37e29f9a,
+      type: 3}
+    m_Threshold: 3
+    m_Position: {x: 1, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: XSpeed
     m_Mirror: 0
   m_BlendParameter: XSpeed
   m_BlendParameterY: YSpeed
-  m_MinThreshold: 0
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -1
+  m_MaxThreshold: 3
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 2
 --- !u!1107 &-7631493201450163097

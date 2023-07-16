@@ -119,8 +119,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        animatorCon.SetFloat("XSpeed", correctedDirection.x);
-        animatorCon.SetFloat("YSpeed", -Vector3.Dot(correctedDirection, transform.forward));
+        
+        var animDir = Vector3.Dot(transform.forward, correctedDirection);
+        var animRight = Vector3.Dot(transform.right, correctedDirection);
+        //Debug.Log(animDir + " | " + animRight);
+        animatorCon.SetFloat("XSpeed", animRight);
+        animatorCon.SetFloat("YSpeed", - animDir);
     }
 
     private void LateUpdate()
