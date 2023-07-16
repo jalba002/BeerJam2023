@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b4dc9491caa37db4b8b9b3a8d0825647
+guid: 1b3b23779c215a74fb18973ff5ea1388
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Ship
-    second: {fileID: 2100000, guid: 00f470afc30ee9544a7b16505381ec1f, type: 2}
+    second: {fileID: 2100000, guid: 37ec0d522c4e12b4c838109cd82780ed, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -52,7 +52,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -82,7 +82,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -97,11 +97,11 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
