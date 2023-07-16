@@ -171,7 +171,7 @@ namespace BEER2023.Enemy
                     break;
                 case EnemyState.Disabled:
                     nvAgent.isStopped = true;
-                    nvAgent.path = null;
+                    //nvAgent.path = null;
                     // TODO check if this works fine.
                     gameObject.SetActive(false);
                     // Points get deduced. But not here.

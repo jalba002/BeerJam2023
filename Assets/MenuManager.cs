@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Canvas))]
 public class MenuManager : MonoBehaviour
 {
+    
     [Header("Buttons")]
     public Button playButton;
     public Button optionsButton;
@@ -18,8 +20,14 @@ public class MenuManager : MonoBehaviour
     public RectTransform baseOptions;
     public RectTransform baseCredits;
 
+    private Canvas selfCanvas;
+
+    public bool isCanvasOn => selfCanvas.enabled;
+
     private void Awake()
     {
+        selfCanvas = GetComponent<Canvas>();
+
         playButton.onClick.AddListener(Play);
         optionsButton.onClick.AddListener(Options);
         creditsButton.onClick.AddListener(Credits);
@@ -67,6 +75,31 @@ public class MenuManager : MonoBehaviour
         baseOptions.gameObject.SetActive(false);
         baseButtons.gameObject.SetActive(true);
         backButton.gameObject.SetActive(false);
+    }
+
+    public void OpenAsPause()
+    {
+        //Time.timeScale = 0f;
+        ToggleHide(true);
+        baseCredits.gameObject.SetActive(false);
+        baseOptions.gameObject.SetActive(false);
+        baseButtons.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
+        playButton.onClick.RemoveAllListeners();
+        playButton.onClick.AddListener(BackToGame);
+        backButton.onClick.RemoveAllListeners();
+        backButton.onClick.AddListener(BackToGame);
+    }
+
+    public void BackToGame()
+    {
+        //Time.timeScale = 1f;
+        ToggleHide(false);
+    }
+
+    public void ToggleHide(bool enabled)
+    {
+        selfCanvas.enabled = enabled;
     }
 
 }
