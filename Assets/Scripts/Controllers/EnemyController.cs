@@ -209,11 +209,7 @@ namespace BEER2023.Enemy
                     //nvAgent.path = null;
                     // TODO check if this works fine.
                     //gameObject.SetActive(false);
-                    var rb = this.gameObject.AddComponent<Rigidbody>();
-                    rb.useGravity = true;
-                    rb.drag = 0f;
-                    rb.AddForce(Vector3.up + transform.forward * 20f, ForceMode.Impulse);
-                    Destroy(animator);
+                    Ragdoll(Vector3.up + transform.forward * 20f, true, ForceMode.Impulse);
                     if (boxita != null)
                     {
                         Instantiate(smBox_drop, boxita.transform.position, boxita.transform.rotation);
@@ -222,7 +218,7 @@ namespace BEER2023.Enemy
                         // Drop box.
                         // Dropped box
                     }
-                    Destroy(this.gameObject, 12f);
+                    //Destroy(this.gameObject, 12f);
                     // Points get deduced. But not here.
                     break;
                 case EnemyState.Spawning:
@@ -263,12 +259,18 @@ namespace BEER2023.Enemy
                 SetAttackTarget(alerter.transform);
             }
         }
-        public void Ragdoll(Vector3 force)
+        public void Ragdoll(Vector3 force, bool destroy = true, ForceMode mode = ForceMode.Impulse)
         {
             // Enable ragdoll and add force
             // Diosable cllisions
             // Instantiate 
             // AAAAAAAA
+            var rb = this.gameObject.AddComponent<Rigidbody>();
+            rb.useGravity = true;
+            rb.drag = 0f;
+            rb.AddForce(force, mode);
+            Destroy(animator);
+            if (destroy) Destroy(this.gameObject, 12);
         }
     }
 }

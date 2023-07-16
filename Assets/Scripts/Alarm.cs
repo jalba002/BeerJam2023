@@ -27,7 +27,7 @@ public class Alarm : Trap
         if (coveredArea.enabled && remainingDuration > 0f)
         {
             var enemy = other.gameObject.GetComponent<EnemyController>();
-            if (enemy != null) { enemy.Ragdoll(direction * force); }
+            if (enemy != null) { enemy.Ragdoll(direction * force, false, ForceMode.Impulse); }
         }
     }
 }
