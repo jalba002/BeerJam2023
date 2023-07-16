@@ -39,7 +39,7 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 7
+    amount: 6
     side: 4
     doorStatus: 0
     information: INICI
@@ -59,7 +59,7 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 4
+    amount: 2
     side: 4
     doorStatus: 0
     information: INICI
@@ -86,5 +86,235 @@ MonoBehaviour:
   - verb: 1
     amount: 2
     side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 12
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 2
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 13
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 10
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 2
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 7
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 4
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 3
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 3
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 3
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 17
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 2
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 12
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 3
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 2
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 2
+    side: 2
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 3
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 20
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 17
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 1
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 6
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 5
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 2
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 15
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 7
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 2
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 20
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 20
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 1
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 8
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 9
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 6
+    side: 1
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 3
+    side: 2
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 18
+    side: 2
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 15
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 10
+    side: 4
     doorStatus: 0
     information: INICI
