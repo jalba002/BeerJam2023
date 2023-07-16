@@ -41,6 +41,12 @@ namespace BEER2023.Enemy
 
         private float waitTime = 0f;
 
+        [Header("Boxes")]
+        public GameObject box;
+        public Transform position;
+        private GameObject boxita;
+        public SMBox_Pickable smBox_drop;
+
         private void OnEnable()
         {
             // Probably not used if pooling is going to be used with enemies.
@@ -86,7 +92,7 @@ namespace BEER2023.Enemy
                         ChangeState(EnemyState.Spawning);
                         //ChangeState(EnemyState.Attacking);
                     }
-                    
+
                     break;
                 case EnemyState.Spawning:
                     // Waiting for animation to end.
@@ -103,8 +109,13 @@ namespace BEER2023.Enemy
                         {
                             if (objective.IsEnabled && hpMan.isAlive)
                             {
+                                animator.SetTrigger("GrabBox");
                                 timeStolen += Time.deltaTime;
-                                Debug.Log("Stealing! for: " + timeStolen);
+                                nvAgent.updateRotation = false;
+                                var newdire = objective.transform.position - transform.position;
+                                newdire.y = 0f;
+                                transform.forward = newdire;
+                                //Debug.Log("Stealing! for: " + timeStolen);
                                 if (timeStolen > timeToSteal) ChangeState(EnemyState.Recovering);
                             }
                         }
@@ -132,6 +143,7 @@ namespace BEER2023.Enemy
                     // Do nothing until enabled again
                     // Its mostly for oof'd enemies.
                     // Autocalled
+
                     break;
             }
         }
@@ -184,14 +196,33 @@ namespace BEER2023.Enemy
                 case EnemyState.Recovering:
                     // Select a new exit automatically!
                     // Play recover animation
-                    // TODO
+                    // Spawn the box!
+                    nvAgent.updateRotation = true;
+                    animator.SetTrigger("HasBox");
+                    boxita = Instantiate(box, position);
+                    boxita.transform.localPosition = Vector3.zero;
                     SetAttackTarget(GameDirector.Instance.RequestExit());
                     break;
                 case EnemyState.Disabled:
-                    nvAgent.isStopped = true;
+                    nvAgent.enabled = false;
+                    // nvAgent.isStopped = true;
                     //nvAgent.path = null;
                     // TODO check if this works fine.
-                    gameObject.SetActive(false);
+                    //gameObject.SetActive(false);
+                    var rb = this.gameObject.AddComponent<Rigidbody>();
+                    rb.useGravity = true;
+                    rb.drag = 0f;
+                    rb.AddForce(Vector3.up + transform.forward * 20f, ForceMode.Impulse);
+                    Destroy(animator);
+                    if (boxita != null)
+                    {
+                        Instantiate(smBox_drop, boxita.transform.position, boxita.transform.rotation);
+                        boxita.SetActive(false);
+                        Destroy(boxita);
+                        // Drop box.
+                        // Dropped box
+                    }
+                    Destroy(this.gameObject, 12f);
                     // Points get deduced. But not here.
                     break;
                 case EnemyState.Spawning:
@@ -199,7 +230,7 @@ namespace BEER2023.Enemy
                     // Atleast enable the GO.
                     // TODO check if fine.
                     //GetComponentInChildren<MeshRenderer>().enabled = enabled;
-                   
+
                     break;
             }
         }

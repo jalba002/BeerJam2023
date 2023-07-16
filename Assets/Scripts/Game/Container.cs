@@ -37,22 +37,4 @@ public class Container : MonoBehaviour
         doorStatus = false;
         roof.enabled = true;
     }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (debug)
-        {
-            if (doorStatus) Close();
-            else Open();
-            debug = false;
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.white;
-        UnityEditor.Handles.Label(transform.position + Vector3.up * 3f, itemID.ToString());
-#endif
-    }
 }

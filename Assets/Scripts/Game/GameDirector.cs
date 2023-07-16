@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
@@ -83,8 +84,15 @@ public class GameDirector : MonoBehaviour
         {
             // Toggle pause menu.
             if (menuMan.isCanvasOn)
+            {
+                isSpawning = true;
                 menuMan.BackToGame();
-            else menuMan.OpenAsPause();
+            }
+            else
+            {
+                isSpawning = false;
+                menuMan.OpenAsPause();
+            }
         }
     }
 
@@ -134,6 +142,12 @@ public class GameDirector : MonoBehaviour
         isSpawning = false;
         StopCoroutine(spawningFunction);
         // Show some kind of menu animation.
+        Invoke("ReturnToMenu", 3f);
+    }
+
+    void ReturnToMenu()
+    {
+        SceneManager.LoadScene(1);
     }
     #endregion
 
@@ -145,6 +159,10 @@ public class GameDirector : MonoBehaviour
 
     private IEnumerator spawningFunction;
     private bool isSpawning = true;
+    public void SetIsSpawning(bool enable)
+    {
+        isSpawning = enable;
+    }
     public void StartSpawning()
     {
         // We don't want to interrupt spawning in any way.
@@ -209,6 +227,7 @@ public class GameDirector : MonoBehaviour
                 {
                     Container chosenOne = GetRandomContainer(entry.side); // Gather random spawnpoint.
                     chosenOne.Open();
+                    SpawnDanger(chosenOne.transform);
                 }
                 break;
             case Verbs.Container:
@@ -216,6 +235,7 @@ public class GameDirector : MonoBehaviour
                 if (container == null) return false;
                 if (entry.doorStatus == DoorStatus.Open) container.Open();
                 else if (entry.doorStatus == DoorStatus.Close) container.Close();
+                SpawnDanger(container.transform);
                 break;
             case Verbs.Wait:
                 // Wait command!
@@ -233,6 +253,14 @@ public class GameDirector : MonoBehaviour
                 break;
         }
         return false;
+    }
+
+    public DangerAlert prefab;
+    public Canvas root;
+    public void SpawnDanger(Transform danger)
+    {
+        var a = Instantiate(prefab, root.transform);
+        a.Attach(danger);
     }
 
     public Transform GetObjective()

@@ -74,15 +74,6 @@ public class Trap : MonoBehaviour, IActivatable
         // Anchor doesn't deactivate, the lever doesn't either, it just recharges.
     }
 
-    private void OnValidate()
-    {
-        if (forceRecharge)
-        {
-            Recharge();
-            forceRecharge = false;
-        }
-    }
-
     private void OnDestroy()
     {
         StopAllCoroutines();

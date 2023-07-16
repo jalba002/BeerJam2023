@@ -79,7 +79,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenAsPause()
     {
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
         ToggleHide(true);
         baseCredits.gameObject.SetActive(false);
         baseOptions.gameObject.SetActive(false);
@@ -89,11 +89,18 @@ public class MenuManager : MonoBehaviour
         playButton.onClick.AddListener(BackToGame);
         backButton.onClick.RemoveAllListeners();
         backButton.onClick.AddListener(BackToGame);
+        exitButton.onClick.RemoveAllListeners();
+        exitButton.onClick.AddListener(ExitToMenu);
+    }
+
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void BackToGame()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
         ToggleHide(false);
     }
 

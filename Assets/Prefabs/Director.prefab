@@ -44,11 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fe0b493d7fd2c45be0a2264bffa5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updatePath: 0
-  spawnEnemy: 0
-  debugEnemy: {fileID: 0}
-  testTarget: {fileID: 0}
   enemyPrefab: {fileID: 1249112529195411067, guid: ee67b0af5ab91e146ab0f8ab2d6e0bc3,
     type: 3}
   spawnPoints: []
   objectiveBoxes: []
+  containers: []
+  prefabMenu: {fileID: 0}
+  maxLives: 12
+  currentWave: {fileID: 0}
+  currentWaveInstructionIdx: 0
+  prefab: {fileID: 1707222066955974454, guid: c58807b930f81564b9818eb61f55cbbb, type: 3}
+  root: {fileID: 0}
+  boxesDisplay: {fileID: 0}

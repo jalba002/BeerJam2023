@@ -12,25 +12,25 @@ AvatarMask:
   - m_Path: 
     m_Weight: 1
   - m_Path: enemy_arms
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_back
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_body
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_eyes
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_legs
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_lips
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: enemy_moustache
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.001
     m_Weight: 0
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.001/spine_fk.001
@@ -124,21 +124,21 @@ AvatarMask:
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005
     m_Weight: 0
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/DEF-nose
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/DEF-nose/DEF-nose.001
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/DEF-nose/DEF-nose.001/DEF-nose.002
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/ORG-Eye.L
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/ORG-Eye.L/DEF-Eye.L
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/ORG-Eye.R
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/ORG-spine.004/ORG-spine.005/ORG-head/ORG-Eye.R/DEF-Eye.R
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003
     m_Weight: 0
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003
@@ -172,18 +172,18 @@ AvatarMask:
   - m_Path: rig_enemy/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003/ORG-shoulder.R/DEF-upper_arm.R/DEF-upper_arm.R.001/DEF-forearm.R/DEF-forearm.R.001/DEF-hand.R
     m_Weight: 0
   - m_Path: rig_enemy/root
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-spine.004
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-spine.004/DEF-spine.005
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-spine.004/DEF-spine.005/DEF-head
-    m_Weight: 0
+    m_Weight: 1
