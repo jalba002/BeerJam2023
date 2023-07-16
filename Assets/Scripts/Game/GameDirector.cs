@@ -1,6 +1,7 @@
 using BEER2023.Enemy;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameDirector : MonoBehaviour
@@ -38,6 +39,7 @@ public class GameDirector : MonoBehaviour
 
     // Have a list of pickable targets. If there's a new dropped one, we could analyze if its closer than others.
     // 
+    //
 
     private void Awake()
     {
@@ -64,6 +66,8 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
+        currentLives = maxLives;
+        UpdateBoxesAmount(currentLives);
         StartSpawning();
     }
 
@@ -92,6 +96,7 @@ public class GameDirector : MonoBehaviour
     {
         currentLives--;
         Debug.Log("LOST A LIFE!");
+        UpdateBoxesAmount(currentLives);
 
         if (currentLives <= 0)
         {
@@ -261,4 +266,16 @@ public class GameDirector : MonoBehaviour
     //        spawnEnemy = false;
     //    }
     //}
+
+    #region Handle Canvas
+    [Header("Canvas")]
+    public TextMeshProUGUI boxesDisplay;
+
+    public void UpdateBoxesAmount(int amountRemaining)
+    {
+        boxesDisplay.text = amountRemaining.ToString();
+    }
+
+
+    #endregion
 }
