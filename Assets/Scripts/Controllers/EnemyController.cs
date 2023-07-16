@@ -48,6 +48,7 @@ namespace BEER2023.Enemy
             // Gather components here.
             nvAgent = GetComponent<NavMeshAgent>();
             hpMan = GetComponent<HealthManager>();
+            hpMan.OnEliminated += () => ChangeState(EnemyState.Disabled);
         }
 
         private void Start()
@@ -170,8 +171,9 @@ namespace BEER2023.Enemy
                     break;
                 case EnemyState.Disabled:
                     nvAgent.isStopped = true;
+                    nvAgent.path = null;
                     // TODO check if this works fine.
-                    GetComponentInChildren<MeshRenderer>().enabled = false;
+                    gameObject.SetActive(false);
                     // Points get deduced. But not here.
                     break;
                 case EnemyState.Spawning:
@@ -206,7 +208,7 @@ namespace BEER2023.Enemy
 
         public void Alert(SMBox alerter)
         {
-            if (objective == null || Vector3.Distance(alerter.transform.position, transform.position) 
+            if (objective == null || Vector3.Distance(alerter.transform.position, transform.position)
                 < Vector3.Distance(objective.transform.position, transform.position))
             {
                 SetAttackTarget(alerter.transform);
