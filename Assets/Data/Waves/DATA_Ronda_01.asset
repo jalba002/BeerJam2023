@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveInstructions:
   - verb: 5
-    amount: 2
+    amount: 3
     side: 0
     doorStatus: 0
     information: INICI
@@ -34,12 +34,12 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 1
-    amount: 1
+    amount: 2
     side: 3
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 6
+    amount: 7
     side: 4
     doorStatus: 0
     information: INICI
@@ -49,7 +49,7 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 15
+    amount: 13
     side: 4
     doorStatus: 0
     information: INICI
@@ -59,7 +59,7 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 2
+    amount: 1
     side: 4
     doorStatus: 0
     information: INICI
@@ -119,7 +119,7 @@ MonoBehaviour:
     doorStatus: 0
     information: INICI
   - verb: 5
-    amount: 2
+    amount: 1
     side: 3
     doorStatus: 0
     information: INICI
