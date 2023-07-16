@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34220137775771543b4ba43b0dde3ad6, type: 3}
+  m_Name: DATA_Ronda_01
+  m_EditorClassIdentifier: 
+  waveInstructions:
+  - verb: 5
+    amount: 2
+    side: 0
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 7
+    side: 0
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 10
+    side: 0
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 1
+    side: 0
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 3
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 7
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 1
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 15
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 4
+    amount: 15
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 4
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 6
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 7
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 2
+    amount: 5
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 5
+    amount: 2
+    side: 4
+    doorStatus: 0
+    information: INICI
+  - verb: 1
+    amount: 2
+    side: 3
+    doorStatus: 0
+    information: INICI
