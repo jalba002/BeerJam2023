@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         rootForSounds = new GameObject("[AUDIOMANAGER] - AudioSource Root");
-        for (int i = 0; i<5; i++) // Spawn audiosources
+        for (int i = 0; i<3; i++) // Spawn audiosources
         {
             GenerateNewAudioSource();
         }
@@ -51,6 +51,8 @@ public class AudioManager : MonoBehaviour
 
     private void ConfigureAS(AudioSource aSource, float volume = 0.3f, int priority = 120)
     {
+        availableAudiosources.Add(aSource);
+        aSource.playOnAwake = false;
         aSource.spatialBlend = 0;
         aSource.volume = volume;
         aSource.priority = priority;
@@ -68,7 +70,6 @@ public class AudioManager : MonoBehaviour
         var a = new GameObject("Controlled Audiosource");
         a.transform.parent = rootForSounds.transform;
         var b = a.AddComponent<AudioSource>();
-        availableAudiosources.Add(b);
         ConfigureAS(b);
         return b;
     }

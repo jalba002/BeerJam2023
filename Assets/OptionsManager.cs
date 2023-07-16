@@ -22,7 +22,7 @@ public class OptionsManager : MonoBehaviour
 
     [SerializeField] private AudioMixer audioMixer;
 
-    public static Options currentOptions;
+    public static Options currentOptions = new Options();
     public class Options
     {
         public float sensitivity = 1f;
@@ -38,6 +38,16 @@ public class OptionsManager : MonoBehaviour
     {
         // Load settings if needed.
 
+    }
+
+    public void EditSensitivity(float value)
+    {
+        currentOptions.sensitivity = value;
+    }
+
+    public float GetSensitivity()
+    {
+        return currentOptions.sensitivity;
     }
 
     public void EditMixerVariable(string name, float value)

@@ -4,9 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderHandler : MonoBehaviour
+public class SensitivitySlider : MonoBehaviour
 {
-    public string variableName = "A_Volume";
     public TextMeshProUGUI textValue;
     private Slider relatedSlider;
 
@@ -17,20 +16,21 @@ public class SliderHandler : MonoBehaviour
 
     public void Start()
     {
-        relatedSlider.value = OptionsManager.Instance.GetMixerVariable(variableName);
+        relatedSlider.value = OptionsManager.Instance.GetSensitivity();
         SetNumericValue(relatedSlider.value);
-        relatedSlider.onValueChanged.AddListener(UpdateMixer);
+        relatedSlider.onValueChanged.AddListener(UpdateSensitivity);
     }
 
-    private void UpdateMixer(float newValue)
+    private void UpdateSensitivity(float newValue)
     {
-        OptionsManager.Instance.EditMixerVariable(variableName, newValue);
         SetNumericValue(newValue);
+        OptionsManager.Instance.EditSensitivity(newValue);
     }
 
     private void SetNumericValue(float value)
     {
-        float correctedValue = value*100f;
-        textValue.text = correctedValue.ToString("f0");
+        float correctedValue = value;
+        textValue.text = correctedValue.ToString("f1"); 
     }
 }
+
