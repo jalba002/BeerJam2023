@@ -6,12 +6,14 @@ using UnityEngine.EventSystems;
 public class Trap : MonoBehaviour, IActivatable
 {
     public float rechargeTime = 10f;
+    public float duration = 5f;
 
     public bool isActivatable = true;
 
     public Animator animator;
 
-    private float nextRecharge = 0f;
+    protected float nextRecharge = 0f;
+    protected float remainingDuration = 0f;
 
     private IEnumerator cor;
 
@@ -33,9 +35,10 @@ public class Trap : MonoBehaviour, IActivatable
         // Otherwise, DO!
         // play animation
         // play sound.
-        Debug.Log("Activate Trap");
+        // Debug.Log("Activate Trap");
         //animator.SetTrigger("Play");
         nextRecharge = rechargeTime;
+        remainingDuration = duration;
         if (cor != null) StopCoroutine(cor);
         cor = RechargeEnum();
         StartCoroutine(cor);
@@ -54,7 +57,8 @@ public class Trap : MonoBehaviour, IActivatable
         while (nextRecharge > 0f)
         {
             yield return new WaitForSecondsRealtime(1f);
-            nextRecharge -= 1f;  
+            nextRecharge -= 1f;
+            remainingDuration -= 1f;
         }
         //animator.SetTrigger("Recharge");
         Recharge();

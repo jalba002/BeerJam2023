@@ -17,6 +17,7 @@ public class WaveDataEntry
     [SerializeField] public int amount;
     [SerializeField] public AreaGroup side;
     [SerializeField] public DoorStatus doorStatus;
+    [SerializeField] public string information;
 }
 
 public enum DoorStatus
@@ -32,5 +33,6 @@ public enum Verbs
     Container,
     ContainerRandom,
     ContainerCloseAll,
-    Wait
+    Wait,
+    PlaySound
 }

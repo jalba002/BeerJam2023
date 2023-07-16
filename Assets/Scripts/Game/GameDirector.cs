@@ -156,6 +156,7 @@ public class GameDirector : MonoBehaviour
     private bool InterpretWaveDataEntry(WaveDataEntry entry)
     {
         int amount = entry.amount;
+        string info = entry.information;
 
         // There we go
         switch (entry.verb)
@@ -204,6 +205,9 @@ public class GameDirector : MonoBehaviour
                 {
                     asd.Close();
                 }
+                break;
+            case Verbs.PlaySound:
+                AudioManager.Instance.PlaySound(info);
                 break;
         }
         return false;

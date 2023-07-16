@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager __inst__;
-    private static AudioManager Instance
+    public static AudioManager Instance
     {
         get
         {
@@ -26,6 +26,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+    public List<AudioClip> availableClips = new List<AudioClip>();
     private GameObject rootForSounds;
     // We use this to play sounds.
     List<AudioSource> availableAudiosources = new List<AudioSource>();
@@ -74,10 +76,32 @@ public class AudioManager : MonoBehaviour
         return b;
     }
 
-    public void PlaySound(AudioClip clip, float volume)
+    public void PlaySound(AudioClip clip, float volume = 0.5f)
     {
         AudioSource reference = FindUsableAS();
         reference.clip = clip;
+        reference.volume = volume;
+        reference.Play();
+    }
+
+    public void PlaySound(AudioClip[] clip, float volume = 0.5f)
+    {
+        AudioSource reference = FindUsableAS();
+        reference.clip = clip[Random.Range(0, clip.Length)];
+        reference.volume = volume;
+        reference.Play();
+    }
+
+    public void PlaySound(string clip, float volume = 0.5f)
+    {
+        AudioSource reference = FindUsableAS();
+        var clipp = availableClips.Find(x => x.name == clip);
+        if (clipp == null)
+        {
+            Debug.LogWarning("Clip " + clip + " not found!"); 
+            return;
+        }
+        reference.clip = clipp;
         reference.volume = volume;
         reference.Play();
     }

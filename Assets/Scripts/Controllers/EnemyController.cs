@@ -212,5 +212,12 @@ namespace BEER2023.Enemy
                 SetAttackTarget(alerter.transform);
             }
         }
+        public void Ragdoll(Vector3 force)
+        {
+            // Enable ragdoll and add force
+            // Diosable cllisions
+            // Instantiate 
+            // AAAAAAAA
+        }
     }
 }

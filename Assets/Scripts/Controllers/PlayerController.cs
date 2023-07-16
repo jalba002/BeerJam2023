@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public float walkingSpeed = 10f;
     public float rotationSpeed = 120f;
 
-    public float activationRange = 1f;
+    public float activationRange = 3f;
     private Vector2 direction;
 
     private CharacterController characterController;
@@ -21,13 +21,20 @@ public class PlayerController : MonoBehaviour
 
     public Transform lookTarget;
 
+    public Transform attackOrigin;
+    [Header("Masks")]
     public LayerMask lMask;
+    public LayerMask attackMask;
     private Vector2 correctedDirection;
     private Transform movementReference;
 
     private Animator animatorCon;
 
     private bool mouseClicked = false;
+
+    [Header("Sounds")]
+    public AudioClip[] paellaHit;
+    public AudioClip[] paellaMiss;
 
     private void OnEnable()
     {
@@ -40,7 +47,7 @@ public class PlayerController : MonoBehaviour
             lookTarget.gameObject.name = "[GENERATED] - Player Cursor";
             var col = lookTarget.GetComponent<Collider>();
             if (col != null) Destroy(col);
-            //lookTarget.GetComponent<MeshRenderer>().enabled = false; 
+            lookTarget.GetComponent<MeshRenderer>().enabled = false; 
         }
         if (movementReference != null) 
         { 
@@ -72,20 +79,48 @@ public class PlayerController : MonoBehaviour
             float rotationTotal = Mathf.Lerp(transform.eulerAngles.y, ra.eulerAngles.y, rotationSpeed * Time.deltaTime);
             transform.eulerAngles = new Vector3(0f, rotationTotal, 0f);
 
-            if (mouseClicked)
+            //if (mouseClicked)
+            //{
+            //    float distance = Vector3.Distance(transform.position, hit.collider.bounds.center);
+            //    //Debug.Log("Hit distance! :" + distance);
+            //    //Debug.DrawLine(transform.position, hit.collider.bounds.center, Color.red, 10f);
+            //    if (distance < activationRange)
+            //    {
+            //        hit.collider.gameObject?.GetComponent<IActivatable>()?.Activate(this.gameObject.transform);
+            //    }
+            //}
+        }
+
+        if (mouseClicked)
+        {
+            animatorCon.SetTrigger("Attack");
+            // Cast a sphere in front of the player to see if it hits anything.
+            var hits = Physics.OverlapSphere(attackOrigin.position, 1f, attackMask);
+            if(hits.Length > 0) // Play sound
             {
-                float distance = Vector3.Distance(transform.position, hit.collider.bounds.center);
-                //Debug.Log("Hit distance! :" + distance);
-                //Debug.DrawLine(transform.position, hit.collider.bounds.center, Color.red, 10f);
-                if (distance < activationRange)
+                //Debug.Log("HIT!");
+                AudioManager.Instance.PlaySound(paellaHit, 0.5f);
+                foreach (var item in hits)
                 {
-                    hit.collider.gameObject?.GetComponent<IActivatable>()?.Activate(this.gameObject.transform);
+                    if(item.gameObject.layer == 16)//LayerMask.NameToLayer("Enemy"))
+                    {
+                        item.gameObject.GetComponent<HealthManager>().DealDamage(1);
+                    }
+                    else
+                    {
+                        item.gameObject.GetComponent<IActivatable>()?.Activate(this.transform);
+                    }
                 }
+            }
+            else
+            {
+                //Debug.Log("MISS");
+                AudioManager.Instance.PlaySound(paellaMiss, 0.5f);
             }
         }
 
         animatorCon.SetFloat("XSpeed", correctedDirection.x);
-        animatorCon.SetFloat("YSpeed", Vector3.Dot(correctedDirection, transform.forward));
+        animatorCon.SetFloat("YSpeed", -Vector3.Dot(correctedDirection, transform.forward));
     }
 
     private void LateUpdate()

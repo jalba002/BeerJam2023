@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Lever : Trap
 {
-    public Trap referencedTrap;
+    public List<Trap> referencedTraps = new List<Trap>();
 
     public override bool Activate(Transform activator)
     {
         if (base.Activate(activator))
         {
             animator.SetTrigger("Activate");
-
+            foreach (Trap trap in referencedTraps)
+            {
+                trap.Activate(activator);
+            }
         }
         return false;
     }

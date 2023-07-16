@@ -18,11 +18,11 @@ public class Barrel : Trap
         // 
         // Set the Y to zero to just adapt the direction? It will be crazy
         rb = this.gameObject.AddComponent<Rigidbody>();
-        rb.angularDrag = 0.01f;
-        rb.drag = 0.05f;
+        rb.angularDrag = 0.001f;
+        rb.drag = 0;
         rb.useGravity = true;
         rb.isKinematic = false;
-
+        rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX; 
         Vector3 direction = caster.forward;
 
         rb.AddForce(direction * thrustForce);
@@ -43,5 +43,7 @@ public class Barrel : Trap
     {
         // If it has enough speed, then collide against enemies!
         // Maybe it should play an animation before starting rolling?
+        // No slowdown pls
+        collision.gameObject.GetComponent<HealthManager>()?.DealDamage(1890);
     }
 }

@@ -60,6 +60,13 @@ public class WaveListDrawer : PropertyDrawer
                 contentPosition.x += contentPosition.width;
                 EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("amount"), GUIContent.none);
                 break;
+            case Verbs.PlaySound:
+                contentPosition.width *= 0.5f;
+                EditorGUI.indentLevel = 0;
+                EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("verb"), GUIContent.none);
+                contentPosition.x += contentPosition.width;
+                EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("information"), GUIContent.none);
+                break;
             case Verbs.None:
                 EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("verb"), GUIContent.none);
                 break;
