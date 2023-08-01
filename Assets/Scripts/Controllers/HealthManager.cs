@@ -12,6 +12,8 @@ public class HealthManager : MonoBehaviour
     public Action OnSpawn;
     public Action OnEliminated;
 
+    public Animator EnemyAnimator;
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -36,6 +38,9 @@ public class HealthManager : MonoBehaviour
     {
         if (!isAlive) return;
         currentHealth -= damage;
+
+        EnemyAnimator.SetTrigger("Hit");
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
