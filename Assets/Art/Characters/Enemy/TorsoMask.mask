@@ -188,6 +188,6 @@ AvatarMask:
   - m_Path: rig_enemy/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-neck.001/DEF-neck.002/DEF-head
     m_Weight: 0
   - m_Path: rig_enemy/root/ORG-box
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: rig_enemy/root/ORG-box/DEF-box
-    m_Weight: 0
+    m_Weight: 1

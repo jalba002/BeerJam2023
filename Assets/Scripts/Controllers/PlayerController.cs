@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     // Probably move on the direction of the char.
     // Snap to ground with no gravity at all.
     // Insta-rotate to places. High speeds.
+    [Header("Settings")]
+
+    public float attackCooldown = 0.25f;
 
     public float walkingSpeed = 10f;
     public float rotationSpeed = 120f;
@@ -36,8 +39,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] paellaHit;
     public AudioClip[] paellaMiss;
 
+    private float currentAttackCooldown = 0f;
+
     private void OnEnable()
     {
+        currentAttackCooldown = 0f;
         // Better than on awake?
         characterController = GetComponent<CharacterController>();
         mainCamera = FindObjectOfType<Camera>();
@@ -91,24 +97,24 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
-        if (mouseClicked)
+        if (mouseClicked && currentAttackCooldown < Time.timeSinceLevelLoad)
         {
             animatorCon.SetTrigger("Attack");
             // Cast a sphere in front of the player to see if it hits anything.
-            var hits = Physics.OverlapSphere(attackOrigin.position, 1f, attackMask);
+            var hits = Physics.OverlapSphere(attackOrigin.position, .3f, attackMask);
             if(hits.Length > 0) // Play sound
             {
-                //Debug.Log("HIT!");
-                AudioManager.Instance.PlaySound(paellaHit, 0.5f);
                 foreach (var item in hits)
                 {
                     if(item.gameObject.layer == 16)//LayerMask.NameToLayer("Enemy"))
                     {
                         item.gameObject.GetComponent<HealthManager>().DealDamage(1);
+                        AudioManager.Instance.PlaySound(paellaHit, 0.5f);
                     }
                     else
                     {
                         item.gameObject.GetComponent<IActivatable>()?.Activate(this.transform);
+                        AudioManager.Instance.PlaySound(paellaHit, 0.5f);
                     }
                 }
             }
@@ -117,9 +123,10 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("MISS");
                 AudioManager.Instance.PlaySound(paellaMiss, 0.5f);
             }
+            currentAttackCooldown = Time.timeSinceLevelLoad + attackCooldown;
         }
 
-        
+
         var animDir = Vector3.Dot(transform.forward, correctedDirection);
         var animRight = Vector3.Dot(transform.right, correctedDirection);
         //Debug.Log(animDir + " | " + animRight);

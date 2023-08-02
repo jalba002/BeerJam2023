@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
             {
                 __inst__ = new GameObject("[AUDIO MANAGER]").AddComponent<AudioManager>();
             }
+  
             return __inst__;
         }
         set
@@ -44,11 +45,16 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        rootForSounds = new GameObject("[AUDIOMANAGER] - AudioSource Root");
         for (int i = 0; i<3; i++) // Spawn audiosources
         {
             GenerateNewAudioSource();
         }
+    }
+
+    private void CreateRoot()
+    {
+        if (rootForSounds != null) return;
+        rootForSounds = new GameObject("[AUDIOMANAGER] - AudioSource Root");
     }
 
     private void ConfigureAS(AudioSource aSource, float volume = 0.3f, int priority = 120)
@@ -62,7 +68,9 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource FindUsableAS()
     {
-        AudioSource audioS = availableAudiosources.Find(x => x.isPlaying == false);
+        AudioSource audioS;
+        if (availableAudiosources.Count <= 0) audioS = GenerateNewAudioSource();
+        audioS = availableAudiosources.Find(x => x.isPlaying == false);
         if (audioS == null) audioS = GenerateNewAudioSource();
         return audioS;
     }
@@ -70,6 +78,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource GenerateNewAudioSource()
     {
         var a = new GameObject("Controlled Audiosource");
+        CreateRoot();
         a.transform.parent = rootForSounds.transform;
         var b = a.AddComponent<AudioSource>();
         ConfigureAS(b);

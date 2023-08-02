@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.AI;
 public enum EnemyState
 {
-    Idle,
+    Disabled,
     Startup,
-    Spawning,
     Attacking,
-    Recovering,
-    Disabled
+    Stealing,
+    Leaving,
+    Exit,
+    Dead
 }
 namespace BEER2023.Enemy
 {
@@ -26,7 +27,7 @@ namespace BEER2023.Enemy
         public float timeToSteal = 5f;
         private float timeStolen = 0f;
 
-        public EnemyState initialState = EnemyState.Spawning;
+        public EnemyState initialState = EnemyState.Startup;
 
         [ReadOnly] public EnemyState currentState;
 
@@ -36,6 +37,7 @@ namespace BEER2023.Enemy
         private HealthManager hpMan;
 
         private SMBox objective;
+        private Transform exitPoint;
 
         private Animator animator;
 
@@ -59,7 +61,7 @@ namespace BEER2023.Enemy
             animator = GetComponentInChildren<Animator>();
             nvAgent = GetComponent<NavMeshAgent>();
             hpMan = GetComponent<HealthManager>();
-            hpMan.OnEliminated += () => ChangeState(EnemyState.Disabled);
+            hpMan.OnEliminated += () => ChangeState(EnemyState.Dead);
         }
 
         private void Start()
@@ -79,9 +81,6 @@ namespace BEER2023.Enemy
         {
             switch (currentState)
             {
-                case EnemyState.Idle:
-                    // Start seartching for one? Or just stay still.
-                    break;
                 case EnemyState.Startup:
                     // Do nothin on startup then
                     //nvAgent.isStopped = true;
@@ -89,39 +88,45 @@ namespace BEER2023.Enemy
                     // ChangeState(EnemyState.Idle);
                     if (Time.timeSinceLevelLoad > waitTime)
                     {
-                        ChangeState(EnemyState.Spawning);
+                        ChangeState(EnemyState.Attacking);
                         //ChangeState(EnemyState.Attacking);
                     }
-
-                    break;
-                case EnemyState.Spawning:
-                    // Waiting for animation to end.
-                    ChangeState(EnemyState.Attacking);
                     break;
                 case EnemyState.Attacking:
                     // Go towards the objecvtive through a pre-calculated path.
                     // When the objective is reached, then play the grab animation with correct orientation
                     // Afterwards, if carrying the object, go to recovering. (Maybe same entrance)
-                    if (!objective.IsEnabled) ChangeState(EnemyState.Idle);
+                    if (!objective.IsEnabled) SetAttackTarget(GameDirector.Instance.RequestObjective());
                     else if (!nvAgent.pathPending)
                     {
                         if (nvAgent.remainingDistance <= nvAgent.stoppingDistance)
                         {
                             if (objective.IsEnabled && hpMan.isAlive)
                             {
-                                animator.SetTrigger("GrabBox");
-                                timeStolen += Time.deltaTime;
-                                nvAgent.updateRotation = false;
-                                var newdire = objective.transform.position - transform.position;
-                                newdire.y = 0f;
-                                transform.forward = newdire;
-                                //Debug.Log("Stealing! for: " + timeStolen);
-                                if (timeStolen > timeToSteal) ChangeState(EnemyState.Recovering);
+                                ChangeState(EnemyState.Stealing);
                             }
                         }
                     }
                     break;
-                case EnemyState.Recovering:
+                case EnemyState.Stealing:
+                    if (nvAgent.remainingDistance <= nvAgent.stoppingDistance)
+                    {
+                        if (objective.IsEnabled && hpMan.isAlive)
+                        {
+                            if (timeStolen >= timeToSteal) ChangeState(EnemyState.Leaving);
+                            timeStolen += Time.deltaTime;
+                        }
+                        else if(!objective.IsEnabled)
+                        {
+                            ChangeState(EnemyState.Attacking);
+                        }
+                        else
+                        {
+                            Debug.Log("AHAAAA");
+                        }
+                    }
+                    break;
+                case EnemyState.Leaving:
                     // Go towards an exit. If the character reaches there, then remove a life.
                     // Finally, destroy or hide (pooling) this object.
                     if (!nvAgent.pathPending)
@@ -134,7 +139,8 @@ namespace BEER2023.Enemy
                                 // GOLASOOOOOO
                                 if (!hpMan.isAlive) return;
                                 GameDirector.Instance.BoxScored();
-                                ChangeState(EnemyState.Disabled);
+                                ChangeState(EnemyState.Exit);
+                                //ChangeState(EnemyState.Dead);
                             }
                         }
                     }
@@ -152,23 +158,24 @@ namespace BEER2023.Enemy
         private void ChangeState(EnemyState newState)
         {
             // OnExit
-            if (newState == currentState) return;
+            // Recheck even if same state.
+            //if (newState == currentState) return;
             if (!currentState.Equals(null))
             {
                 switch (currentState)
                 {
-                    case EnemyState.Idle:
-                        nvAgent.isStopped = false;
+                    case EnemyState.Disabled:
                         break;
                     case EnemyState.Startup:
+                        animator.SetLayerWeight(2, 1f);
                         break;
                     case EnemyState.Attacking:
                         break;
-                    case EnemyState.Recovering:
+                    case EnemyState.Stealing:
                         break;
-                    case EnemyState.Disabled:
+                    case EnemyState.Leaving:
                         break;
-                    case EnemyState.Spawning:
+                    case EnemyState.Dead:
                         break;
                 }
             }
@@ -178,9 +185,6 @@ namespace BEER2023.Enemy
             // OnEnter
             switch (currentState)
             {
-                case EnemyState.Idle:
-                    nvAgent.isStopped = true;
-                    break;
                 case EnemyState.Startup:
                     timeStolen = 0f;
                     hpMan.Spawn();
@@ -188,22 +192,34 @@ namespace BEER2023.Enemy
                     // Visible
                     animator.SetTrigger("Jump");
                     waitTime = Time.timeSinceLevelLoad + 1f;
+                    animator.SetLayerWeight(2, 0f);
                     break;
                 case EnemyState.Attacking:
                     nvAgent.isStopped = false;
+                    if (!objective.IsEnabled) SetAttackTarget(GameDirector.Instance.RequestObjective());
                     // Autoselect a new target?
                     break;
-                case EnemyState.Recovering:
+                case EnemyState.Stealing:
+                    animator.SetLayerWeight(1, 1f);
+                    timeStolen = 0f;
+                    animator.SetTrigger("GrabBox");
+                    nvAgent.updateRotation = false;
+                    var newdire = objective.transform.position - transform.position;
+                    newdire.y = 0f;
+                    transform.forward = newdire;
+                    boxita = Instantiate(box, position);
+                    //boxita.transform.localRotation = Quaternion.Euler(new Vector3(-90f, 0f, 0f));
+                    boxita.transform.localPosition = Vector3.zero;
+                    break;
+                case EnemyState.Leaving:
                     // Select a new exit automatically!
                     // Play recover animation
                     // Spawn the box!
+                    SetExitTarget(GameDirector.Instance.RequestExit());
                     nvAgent.updateRotation = true;
                     animator.SetTrigger("HasBox");
-                    boxita = Instantiate(box, position);
-                    boxita.transform.localPosition = Vector3.zero;
-                    SetAttackTarget(GameDirector.Instance.RequestExit());
                     break;
-                case EnemyState.Disabled:
+                case EnemyState.Dead:
                     nvAgent.enabled = false;
                     // nvAgent.isStopped = true;
                     //nvAgent.path = null;
@@ -221,42 +237,65 @@ namespace BEER2023.Enemy
                     //Destroy(this.gameObject, 12f);
                     // Points get deduced. But not here.
                     break;
-                case EnemyState.Spawning:
-                    // Play an animator and respawn?
-                    // Atleast enable the GO.
-                    // TODO check if fine.
-                    //GetComponentInChildren<MeshRenderer>().enabled = enabled;
-
+                case EnemyState.Exit:
+                    animator.SetTrigger("Exit");
+                    nvAgent.enabled = false;
+                    nvAgent.updateRotation = true;
+                    // rotation is same as spawnpoint
+                    //transform.rotation = Quaternion.Inverse(exitPoint.rotation);
+                    animator.SetLayerWeight(1, 0f);
+                    animator.SetLayerWeight(2, 0f);
                     break;
             }
         }
 
+        public void DisableCollider()
+        {
+            // Called from animation
+            GetComponent<Collider>().enabled = false;
+        }
+
+
         // Path is given by spawner?
-        public void SetAttackTarget(Transform attackableTarget)
+        public void SetAttackTarget(SMBox attackableTarget)
         {
             if (attackableTarget == null)
             {
-                ChangeState(EnemyState.Idle);
+                SetAttackTarget(GameDirector.Instance.RequestObjective());
                 return;
             }
-            objective = attackableTarget.GetComponent<SMBox>();
+
+            objective = attackableTarget;
+
+            CalculatePath(attackableTarget.transform);
+        }
+        
+        public void SetExitTarget(Transform attackableTarget)
+        {
+            exitPoint = attackableTarget;
+
+            CalculatePath(attackableTarget);
+        }
+
+        private void CalculatePath(Transform target)
+        {
             // Create a path towars target?
             NavMeshPath newPath = new NavMeshPath();
-            if ((NavMesh.CalculatePath(transform.position, attackableTarget.position, NavMesh.AllAreas, newPath)))
+            if ((NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, newPath)))
             {
                 currentPath = newPath;
-                // Apply to agent too.
                 nvAgent.SetPath(currentPath);
             }
-            //if (currentState == EnemyState.Idle) ChangeState(EnemyState.Attacking);
         }
 
         public void Alert(SMBox alerter)
         {
+            if (!hpMan.isAlive) return;
+            if (currentState == EnemyState.Stealing || currentState == EnemyState.Leaving || currentState == EnemyState.Dead) return;
             if (objective == null || Vector3.Distance(alerter.transform.position, transform.position)
                 < Vector3.Distance(objective.transform.position, transform.position))
             {
-                SetAttackTarget(alerter.transform);
+                SetAttackTarget(alerter);
             }
         }
         public void Ragdoll(Vector3 force, bool destroy = true, ForceMode mode = ForceMode.Impulse)

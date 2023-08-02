@@ -120,7 +120,7 @@ public class GameDirector : MonoBehaviour
     public void BoxScored()
     {
         currentLives--;
-        Debug.Log("LOST A LIFE!");
+        //Debug.Log("LOST A LIFE!");
         UpdateBoxesAmount(currentLives);
 
         if (currentLives <= 0)
@@ -211,20 +211,17 @@ public class GameDirector : MonoBehaviour
                 // For now don't use pooler? Bah use it anyway.
                 for (int i = 0; i < amount; i++)
                 {
-                    Transform spawnPoint = GetRandomSpawnPoint<Transform>(entry.side); // Gather random spawnpoint.
+                    Transform spawnPoint = GetRandomSpawnPoint(entry.side).transform; // Gather random spawnpoint.
                     EnemyController enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-                    var a = GetRandomFromList<SMBox>(objectiveBoxes);
-                    if (a != null)
-                    {
-                        enemy.SetAttackTarget(a.transform);
-                        enemy.SwapState(EnemyState.Startup);
-                        enemies.Add(enemy);
-                    }
+                    SMBox boxer = GetRandomFromList(objectiveBoxes);
+                    enemy.SetAttackTarget(boxer);
+                    enemy.SwapState(EnemyState.Startup);
+                    enemies.Add(enemy);
                 }
                 break;
             case Verbs.ContainerRandom:
                 // From the list of containers, gather one and open it.
-                Debug.Log("Opening a random container!");
+                //Debug.Log("Opening a random container!");
                 for (int i = 0; i < amount; i++)
                 {
                     Container chosenOne = GetRandomContainer(entry.side); // Gather random spawnpoint.
@@ -241,10 +238,10 @@ public class GameDirector : MonoBehaviour
                 break;
             case Verbs.Wait:
                 // Wait command!
-                Debug.Log("Wait command issued");
+                //Debug.Log("Wait command issued");
                 return true;
             case Verbs.ContainerCloseAll:
-                Debug.Log("Closing all containers");
+                //Debug.Log("Closing all containers");
                 foreach (Container asd in containers)
                 {
                     asd.Close();
@@ -265,15 +262,15 @@ public class GameDirector : MonoBehaviour
         a.Attach(danger);
     }
 
-    public Transform GetObjective()
+    public SMBox RequestObjective()
     {
-        return GetRandomFromList<SMBox>(objectiveBoxes).transform;
+        return GetRandomFromList(objectiveBoxes);
     }
 
-    private T GetRandomSpawnPoint<T>(AreaGroup side)
+    private SpawnPoint GetRandomSpawnPoint(AreaGroup side)
     {
         var sps = spawnPoints.FindAll(x => x.side == side);
-        T point = sps[Random.Range(0, sps.Count)].GetComponent<T>();
+        SpawnPoint point = sps[Random.Range(0, sps.Count)];
         return point;
     }
 
@@ -293,7 +290,7 @@ public class GameDirector : MonoBehaviour
     public Transform RequestExit()
     {
         // TODO not scalable. Max range is not generic.
-        return GetRandomSpawnPoint<Transform>((AreaGroup)Random.Range(0, 5));
+        return GetRandomSpawnPoint((AreaGroup)Random.Range(1, 5)).transform;
     }
 
     #endregion

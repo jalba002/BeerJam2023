@@ -14,6 +14,9 @@ public class HealthManager : MonoBehaviour
 
     public Animator EnemyAnimator;
 
+    [Header("Sounds")]
+    public AudioClip damagedSound;
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -40,6 +43,7 @@ public class HealthManager : MonoBehaviour
         currentHealth -= damage;
 
         EnemyAnimator.SetTrigger("Hit");
+        AudioManager.Instance.PlaySound(damagedSound, 0.3f);
 
         if (currentHealth <= 0)
         {

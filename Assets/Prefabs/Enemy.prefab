@@ -86,8 +86,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   angularSpeed: 240
-  stopDistance: 1
-  timeToSteal: 4
+  stopDistance: 0.8
+  timeToSteal: 3
   initialState: 0
   currentState: 0
   box: {fileID: 8743910255695299209, guid: 8b2913697c6514642b556111b4bd1ecb, type: 3}
@@ -109,6 +109,7 @@ MonoBehaviour:
   startingHealth: 23
   isAlive: 1
   EnemyAnimator: {fileID: 8741218781461866347}
+  damagedSound: {fileID: 8300000, guid: 98e2fd60813b27342a6d43776239f6e5, type: 3}
 --- !u!1001 &2892887122748988154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}
@@ -150,7 +151,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}
@@ -165,7 +166,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4153f1459235794386f5d024a19aa37,
         type: 3}

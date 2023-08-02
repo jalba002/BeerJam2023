@@ -22,7 +22,6 @@ public class DangerAlert : MonoBehaviour
     {
         Vector2 newPos = attachedCamera.WorldToScreenPoint(attachedTransform.position);
         // Limit resolution?
-        Debug.Log(newPos);
         newPos.x = Mathf.Clamp(newPos.x, Screen.width * 0.05f, Screen.width *0.95f);
         newPos.y = Mathf.Clamp(newPos.y, Screen.height * 0.05f, Screen.height * 0.95f);
         transform.position = newPos + (Vector2)offset;
